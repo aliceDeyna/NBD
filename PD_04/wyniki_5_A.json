@@ -1,0 +1,231 @@
+MongoDB shell version v4.4.5
+connecting to: mongodb://127.0.0.1:27017/nbd?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("d01e5a86-9143-4ce1-abd1-4e54a0f7a43e") }
+MongoDB server version: 4.4.5
+[
+	{
+		"_id" : "EUR",
+		"total_on_cards" : 73793,
+		"avg_on_cards" : 4919.533333333334
+	},
+	{
+		"_id" : "ARS",
+		"total_on_cards" : 4981,
+		"avg_on_cards" : 4981
+	},
+	{
+		"_id" : "VUV",
+		"total_on_cards" : 6418,
+		"avg_on_cards" : 6418
+	},
+	{
+		"_id" : "PHP",
+		"total_on_cards" : 47182,
+		"avg_on_cards" : 4718.2
+	},
+	{
+		"_id" : "CZK",
+		"total_on_cards" : 4242,
+		"avg_on_cards" : 4242
+	},
+	{
+		"_id" : "BRL",
+		"total_on_cards" : 23526,
+		"avg_on_cards" : 4705.2
+	},
+	{
+		"_id" : "PEN",
+		"total_on_cards" : 10177,
+		"avg_on_cards" : 5088.5
+	},
+	{
+		"_id" : "KYD",
+		"total_on_cards" : 3760,
+		"avg_on_cards" : 3760
+	},
+	{
+		"_id" : "KZT",
+		"total_on_cards" : 3788,
+		"avg_on_cards" : 3788
+	},
+	{
+		"_id" : "NPR",
+		"total_on_cards" : 5792,
+		"avg_on_cards" : 5792
+	},
+	{
+		"_id" : "IRR",
+		"total_on_cards" : 6300,
+		"avg_on_cards" : 3150
+	},
+	{
+		"_id" : "CUP",
+		"total_on_cards" : 5256,
+		"avg_on_cards" : 5256
+	},
+	{
+		"_id" : "JPY",
+		"total_on_cards" : 9764,
+		"avg_on_cards" : 4882
+	},
+	{
+		"_id" : "IDR",
+		"total_on_cards" : 101908,
+		"avg_on_cards" : 4430.782608695652
+	},
+	{
+		"_id" : "SEK",
+		"total_on_cards" : 3860,
+		"avg_on_cards" : 3860
+	},
+	{
+		"_id" : "AFN",
+		"total_on_cards" : 6693,
+		"avg_on_cards" : 6693
+	},
+	{
+		"_id" : "ZAR",
+		"total_on_cards" : 6665,
+		"avg_on_cards" : 3332.5
+	},
+	{
+		"_id" : "MXN",
+		"total_on_cards" : 13706,
+		"avg_on_cards" : 4568.666666666667
+	},
+	{
+		"_id" : "XOF",
+		"total_on_cards" : 12282,
+		"avg_on_cards" : 6141
+	},
+	{
+		"_id" : "NZD",
+		"total_on_cards" : 5328,
+		"avg_on_cards" : 5328
+	},
+	{
+		"_id" : "BGN",
+		"total_on_cards" : 9818,
+		"avg_on_cards" : 4909
+	},
+	{
+		"_id" : "PYG",
+		"total_on_cards" : 4874,
+		"avg_on_cards" : 4874
+	},
+	{
+		"_id" : "CAD",
+		"total_on_cards" : 20951,
+		"avg_on_cards" : 5237.75
+	},
+	{
+		"_id" : "AMD",
+		"total_on_cards" : 9424,
+		"avg_on_cards" : 4712
+	},
+	{
+		"_id" : "THB",
+		"total_on_cards" : 9421,
+		"avg_on_cards" : 4710.5
+	},
+	{
+		"_id" : "USD",
+		"total_on_cards" : 27473,
+		"avg_on_cards" : 5494.6
+	},
+	{
+		"_id" : "COP",
+		"total_on_cards" : 14695,
+		"avg_on_cards" : 4898.333333333333
+	},
+	{
+		"_id" : "HNL",
+		"total_on_cards" : 5940,
+		"avg_on_cards" : 5940
+	},
+	{
+		"_id" : "ILS",
+		"total_on_cards" : 5946,
+		"avg_on_cards" : 5946
+	},
+	{
+		"_id" : "PLN",
+		"total_on_cards" : 20507,
+		"avg_on_cards" : 5126.75
+	},
+	{
+		"_id" : "XAF",
+		"total_on_cards" : 10125,
+		"avg_on_cards" : 5062.5
+	},
+	{
+		"_id" : "UAH",
+		"total_on_cards" : 9931,
+		"avg_on_cards" : 4965.5
+	},
+	{
+		"_id" : "MWK",
+		"total_on_cards" : 3574,
+		"avg_on_cards" : 3574
+	},
+	{
+		"_id" : "PKR",
+		"total_on_cards" : 5216,
+		"avg_on_cards" : 5216
+	},
+	{
+		"_id" : "CNY",
+		"total_on_cards" : 153777,
+		"avg_on_cards" : 4960.548387096775
+	},
+	{
+		"_id" : "VND",
+		"total_on_cards" : 8679,
+		"avg_on_cards" : 4339.5
+	},
+	{
+		"_id" : "NGN",
+		"total_on_cards" : 13947,
+		"avg_on_cards" : 3486.75
+	},
+	{
+		"_id" : "NOK",
+		"total_on_cards" : 4773,
+		"avg_on_cards" : 4773
+	},
+	{
+		"_id" : "YER",
+		"total_on_cards" : 4991,
+		"avg_on_cards" : 4991
+	},
+	{
+		"_id" : "HRK",
+		"total_on_cards" : 5690,
+		"avg_on_cards" : 5690
+	},
+	{
+		"_id" : "BOB",
+		"total_on_cards" : 5263,
+		"avg_on_cards" : 5263
+	},
+	{
+		"_id" : "MAD",
+		"total_on_cards" : 3818,
+		"avg_on_cards" : 3818
+	},
+	{
+		"_id" : "CDF",
+		"total_on_cards" : 6131,
+		"avg_on_cards" : 6131
+	},
+	{
+		"_id" : "DOP",
+		"total_on_cards" : 11731,
+		"avg_on_cards" : 5865.5
+	},
+	{
+		"_id" : "RUB",
+		"total_on_cards" : 37805,
+		"avg_on_cards" : 4725.625
+	}
+]
