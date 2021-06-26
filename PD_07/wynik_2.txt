@@ -1,0 +1,12 @@
+HTTP/1.1 200 OK
+X-Riak-Vclock: a85hYGBgzGDKBVI8ypz/fsY+1H3BwBg/KYMpkTGPlYHnuvctviwA
+Vary: Accept-Encoding
+Server: MochiWeb/1.1 WebMachine/1.10.9 (cafe not found)
+Link: </buckets/s23508>; rel="up"
+Last-Modified: Sat, 26 Jun 2021 16:51:24 GMT
+ETag: "1K1nVN1YAu8VsetvIPfbVK"
+Date: Sat, 26 Jun 2021 16:52:54 GMT
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 71
+
+{ "name" : "Étienne", "sex" : "Male", "country" : "France", "age": 23}

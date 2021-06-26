@@ -1,0 +1,53 @@
+BUCKET=s23508
+
+curl http://localhost:8098/buckets/$BUCKET/keys?keys=true
+
+1.	Umieść w bazie (nazwa bucketa ma być Twoim numerem indeksu poprzedzonym literą „s”) 5 wartości, gdzie każda z nich ma być dokumentem json mającym 4 pola co najmniej dwóch różnych typów. 
+
+values=( '{ "name" : "Kacper", "sex" : "Male", "country" : "Poland", "age": 35}' \
+'{ "name" : "July", "sex" : "Female", "country" : "America", "age": 43}' \
+'{ "name" : "Étienne", "sex" : "Male", "country" : "France", "age": 23}' \
+'{ "name" : "Andrea", "sex" : "Female", "country" : "Germany", "age": 55}' \
+'{ "name" : "João", "sex" : "Male", "country" : "Brazil", "age": 18}' )
+
+wynik_1="wynik_1.txt"
+echo "" > $wynik_1
+
+for i in "${!wynik_1[@]}"
+do
+    curl -XPOST -i -H -vvv "Content-Type: application/json" \
+        -d "${records[i]}" \
+        http://localhost:8098/buckets/$BUCKET/keys/$i >> wynik_1.txt
+done
+
+curl -v http://127.0.0.1:8098/buckets/$BUCKET/keys?keys=true
+curl -v http://127.0.0.1:8098/buckets/$BUCKET/keys/1
+
+echo ""
+
+2.	Pobierz z bazy jedną z dodanych przez Ciebie wartości.  
+curl -i http://127.0.0.1:8098/buckets/$BUCKET/keys/2 > wynik_2.txt
+
+3.	Zmodyfikuj jedną z wartości – dodając dodatkowe pole do dokumentu. 
+curl -i -XPUT -H "Content-Type: application/json" -d '{ "name" : "Étienne", "sex" : "Male", "country" : "France", "age": 23, "work position": true }' http://localhost:8098/buckets/$BUCKET/keys/2 > wynik_3.txt
+
+4.	Zmodyfikuj jedną z wartości – usuwając jedną pole z wybranego dokumentu. 
+curl -i -XPUT -H "Content-Type: application/json" -d '{"name" : "Kacper", "sex" : "Male", "country" : "Poland"}' http://localhost:8098/buckets/$BUCKET/keys/0 > wynik_4.txt
+
+5.	Zmodyfikuj jedną z wartości – zmieniając wartość jednego z pól.  
+curl -i -XPUT -H "Content-Type: application/json" -d '{{ "name" : "João", "sex" : "Male", "country" : "Brazil", "age": 21}' http://localhost:8098/buckets/$BUCKET/keys/4 > wynik_5.txt
+
+6.	Usuń jeden z dokumentów z bazy.  
+curl -i -XDELETE http://localhost:8098/buckets/$BUCKET/keys/3 > wynik_6.txt
+
+7.	Spróbuj pobrać z bazy wartość, która nie istnieje w tej bazie. 
+curl -i -XGET  http://localhost:8098/buckets/$BUCKET/keys/5 > wynik_7.txt
+
+8.	Dodaj do bazy 1 dokument json (zawierający 1 pole), ale nie specyfikuj klucza. 
+curl -i -XPOST -H "Content-Type: application/json" -d '{"email": test@gmail.com}' http://localhost:8098/buckets/$BUCKET/keys > wynik_8.txt
+
+9.	Pobierz z bazy element z zadania 8. 
+curl -i -XGET  http://localhost:8098/buckets/$BUCKET/keys/7iFDV7nuAFeeNGPvI2iSl5mhBYC > wynik_9.txt
+
+10.	Usuń z bazy element z zadania 8. 
+curl -i -XDELETE http://localhost:8098/buckets/$BUCKET/keys/7iFDV7nuAFeeNGPvI2iSl5mhBYC > wynik_10.txt

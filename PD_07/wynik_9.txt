@@ -1,0 +1,12 @@
+HTTP/1.1 200 OK
+X-Riak-Vclock: a85hYGBgzGDKBVI8ypz/fsb+Dw9iYDgcnMGUyJjHytD6xPsWXxYA
+Vary: Accept-Encoding
+Server: MochiWeb/1.1 WebMachine/1.10.9 (cafe not found)
+Link: </buckets/s23508>; rel="up"
+Last-Modified: Sat, 26 Jun 2021 17:48:53 GMT
+ETag: "2tEEYHViuuV6XN9Cx9qw76"
+Date: Sat, 26 Jun 2021 17:49:59 GMT
+Content-Type: application/json
+Content-Length: 25
+
+{"email": test@gmail.com}
