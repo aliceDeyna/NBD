@@ -1,0 +1,81 @@
+
+
+1.	Wszystkie filmy
+MATCH (movie:Movie) 
+RETURN movie
+
+2.	Wszystkie filmy, w których grał Hugo Weaving 
+MATCH (Hugo: Person {name: "Hugo Weaving"})-[:ACTED_IN]->(hugoWeaving_all_movies) 
+RETURN hugoWeaving_all_movies
+
+3.	Reżyserzy filmów, w których grał Hugo Weaving 
+MATCH (Hugo: Person {name: "Hugo Weaving"})-[:ACTED_IN]->(hugoWeaving_all_movies) <-[:DIRECTED]-(directors) 
+RETURN directors
+
+4.	Wszystkie osoby, z którymi Hugo Weaving grał w tych samych filmach 
+MATCH (Hugo:Person {name:"Hugo Weaving"})-[:ACTED_IN]->(movies)<-[:ACTED_IN]-(co_actors_to_hugoWeaving) 
+RETURN co_actors_to_hugoWeaving
+
+5.	Wszystkie filmy osób, które grały w Matrix
+MATCH (matrix_movie:Movie {title:"The Matrix"})<-[:ACTED_IN]-(matrix_actors)-[:ACTED_IN]->(matrix_actors_movies) 
+RETURN matrix_actors_movies
+
+6.	Listę aktorów (aktor = osoba, która grała przynajmniej w jednym filmie) wraz z ilością filmów, w których grali 
+MATCH (list_of_actors:Person)-[number_of_movies:ACTED_IN]->(movie) WITH list_of_actors, count(number_of_movies) AS list_of_movies 
+RETURN list_of_actors, list_of_movies
+
+7.	Listę osób, które napisały scenariusz filmu, które wyreżyserowały wraz z tytułami takich filmów (koniunkcja – ten sam autor scenariusza i reżyser) 
+MATCH (Person)-[:WROTE]->(Movie) WITH Person, Movie MATCH (Person)-[:DIRECTED]->(Movie) 
+RETURN Person, Movie
+
+8.	Listę filmów, w których grał zarówno Hugo Weaving jak i Keanu Reeves 
+MATCH (Hugo: Person {name: "Hugo Weaving"})-[:ACTED_IN]->(list_of_movies)<-[:ACTED_IN]-(Keanu: Person {name: "Keanu Reeves"}) 
+RETURN list_of_movies
+
+9.	(za 0.2pkt) Zestaw zapytań powodujących uzupełnienie bazy danych o film Captain America: The First Avenger wraz z uzupełnieniem informacji o reżyserze, scenarzystach i odtwórcach głównych ról (w oparciu o skrócone informacje z IMDB - http://www.imdb.com/title/tt0458339/) + zapytanie pokazujące dodany do bazy film wraz odtwórcami głównych ról, scenarzystą i reżyserem. Plik SVG ma pokazywać wynik ostatniego zapytania.  
+
+CREATE (captain_America:Movie {released: 2011, tagline: "Steve Rogers, a rejected military soldier, transforms into Captain America after taking a dose of a Super-Soldier serum. But being Captain America comes at a price as he attempts to take down a war monger and a terrorist organization.", title: "Captain America: The First Avenger"})
+
+// directed
+CREATE (Joe:Person {name: "Joe Johnston", born: 1950 })
+
+// writing
+CREATE (Christopher:Person {name: "Christopher Markus", born: 1970 })
+CREATE (Stephen:Person {name: "Stephen McFeely", born: 1969 })
+
+// cast
+CREATE (Chris:Person {name: "Chris Evans", born: 1981 })
+CREATE (Hayley:Person {name: "Hayley Atwell", born: 1982 })
+
+MATCH (captain_America:Movie),(actor_name:Person)
+WHERE captain_America.title = "Captain America: The First Avenger" 
+AND 
+actor_name.name = "Chris Evans"
+CREATE (actor_name)-[:ACTED_IN]->(captain_America)
+
+MATCH (captain_America:Movie),(actor_name:Person)
+WHERE captain_America.title = "Captain America: The First Avenger" 
+AND 
+actor_name.name = "Hayley Atwell"
+CREATE (actor_name)-[:ACTED_IN]->(captain_America)
+
+MATCH (captain_America:Movie),(actor_name:Person)
+WHERE captain_America.title = "Captain America: The First Avenger" 
+AND 
+actor_name.name = "Joe Johnston"
+CREATE (actor_name)-[:DIRECTED]->(captain_America)
+
+MATCH (captain_America:Movie),(actor_name:Person)
+WHERE captain_America.title = "Captain America: The First Avenger" 
+AND 
+actor_name.name = "Christopher Markus"
+CREATE (actor_name)-[:WROTE]->(captain_America)
+
+MATCH (captain_America:Movie),(actor_name:Person)
+WHERE captain_America.title = "Captain America: The First Avenger" 
+AND 
+actor_name.name = "Stephen McFeely"
+CREATE (actor_name)-[:WROTE]->(captain_America)
+
+MATCH (captain_America:Movie {title: "Captain America: The First Avenger"}) 
+RETURN captain_America
