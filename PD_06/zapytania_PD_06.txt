@@ -1,0 +1,84 @@
+
+Część 1 – Wycieczki górskie
+
+1.	Znajdź trasy którymi można dostać się z Darjeeling na Sandakphu, mające najmniejszą ilość etapów 
+MATCH (from_road:town {name: "Darjeeling"}), (to_road:peak {name: "Sandakphu"}) 
+MATCH all_shortest_path = allShortestPaths((from_road)-[*]->(to_road)) 
+RETURN all_shortest_path
+
+
+2.	Znajdź mające najmniej etapów trasy którymi można dostać się z Darjeeling na Sandakphu i które mogą być wykorzystywane zimą 
+MATCH (from_road:town {name: "Darjeeling"}), (to_road:peak {name: "Sandakphu"}), 
+all_shortest_path = allShortestPaths((from_road)-[*]->(to_road))
+WITH all_shortest_path, relationships(all_shortest_path) as new_road
+WHERE ALL (path in new_road WHERE path.winter = "true")
+RETURN all_shortest_path, new_road
+
+3.	Uszereguj trasy którymi można dostać się z Darjeeling na Sandakphu według dystansu 
+match path = ({name: "Darjeeling"}) -[*]-> ({name: "Sandakphu"}) 
+return path, length(path) order by length(path);
+
+Znajdź wszystkie miejsca do których można dotrzeć przy pomocy roweru (twowheeler) z Darjeeling latem
+
+match path = ({name: "Darjeeling"}) -[rower:twowheeler*]-> (to_road) 
+  where all (rower in relationships(path) where rower.summer = "true")  
+  return distinct(to_road);
+
+3b.
+MATCH p = (source:town {name: "Darjeeling"})-[r:twowheeler*]->(target)
+WHERE ALL (r IN relationships(p) WHERE r.summer = "true")
+RETURN target
+
+// pusty wynik
+
+Część 2 – Połączenia lotnicze
+
+4.	Uszereguj porty lotnicze według ilości rozpoczynających się w nich lotów
+MATCH (airport:Airport)<-[:ORIGIN]-(:Flight)
+WITH airport, count(*) as loty
+RETURN airport, loty
+ORDER BY loty ASC
+
+5.	Znajdź wszystkie porty lotnicze, do których da się dolecieć (bezpośrednio lub z przesiadkami) z Los Angeles (LAX) wydając mniej niż 3000 
+MATCH all_airports = (origin:Airport { name:"LAX" })<-[:ORIGIN]-(:Flight)-[:ORIGIN|DESTINATION*..10]->(destination:Airport)
+WHERE REDUCE(acc = 0, n IN [x IN NODES(all_airports) 
+WHERE 'Flight' IN LABELS(x)] |
+  acc + [(n)<-[:ASSIGN]-(ticket) | ticket.price][0]
+  ) < 3000
+RETURN all_airports
+
+6.	Uszereguj połączenia, którymi można dotrzeć z Los Angeles (LAX) do Dayton (DAY) według ceny biletów 
+MATCH connection=(airport_lax: Airport{name:"LAX"})-[:FLIGHT*..4]->(airport_day: Airport{name: "DAY"})
+WITH reduce(total=0, price_func in relationships(connection) | total + price_func.price) as total_price, connection 
+RETURN connection order by total_price;
+
+// pusty wynik
+
+7.	Znajdź najtańsze połączenie z Los Angeles (LAX) do Dayton (DAY) 
+MATCH connection =(airport_lax: Airport{name:"LAX"})-[:FLIGHT*..4]->(airport_day: Airport{name: "DAY"})
+WITH reduce(total=0, price_func in relationships(connection) | total + price_func.price) as total_price, connection
+RETURN connection order by total_price limit 1;
+
+// pusty wynik
+
+8.	Znajdź najtańsze połączenie z Los Angeles (LAX) do Dayton (DAY) w klasie biznes 
+MATCH connections = (airport_lax:Airport { name:"LAX" })<-[:ORIGIN]-(:Flight)-[:ORIGIN|DESTINATION*..10]->(airport_day:Airport {name: "DAY"})
+WITH connections, REDUCE(acc = 0, n IN [x IN NODES(connections) WHERE 'Flight' IN LABELS(x)] |
+  acc + [(n)<-[:ASSIGN]-(ticket {class: 'business'}) | ticket.price][0]
+  ) as price
+RETURN connections, price
+ORDER BY price asc LIMIT 1
+
+// pusty wynik
+
+9.	Uszereguj linie lotnicze według ilości miast, pomiędzy którymi oferują połączenia (unikalnych miast biorących udział w relacjach :ORIGIN i :DESTINATION węzłów typu Flight obsługiwanych przez daną linię) 
+MATCH (flight:Flight)-[:DESTINATION|ORIGIN]->(airport:Airport)
+RETURN flight.airline, count(distinct(airport)) order by count(distinct(airport)) desc;
+
+
+10.	Znajdź najtańszą trasę łączącą 3 różne porty lotnicze
+MATCH result=(airport_lax: Airport)-[:FLIGHT*..4]->(airport_day: Airport)
+WITH size(reduce(dist=[], n in nodes(result) | case when not n in dist then dist + n end)) as count, result
+where count = 3
+WITH reduce(total=0, f in relationships(result) | total +f.price) as total_price, result
+RETURN result, min(total_price) order by min(total_price) limit 1;
